@@ -4,7 +4,8 @@ var Debugger = {};
 (function () {
 	"use strict";
 
-	var baseDir = __dirname + "./..",
+	var path = require("path"),
+		baseDir = path.dirname(require.main.filename),
 		project = require(baseDir + "/project"),
 		grunt = require("grunt"),
 		fs = require("fs"),

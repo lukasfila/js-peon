@@ -5,5 +5,5 @@ var peon = require("./peon"),
 
 
 //noinspection JSUnresolvedVariable,Eslint
-port = process.env.PORT || 3002;
+port = process.env.PORT || 3000;
 peon.start(path, port);
