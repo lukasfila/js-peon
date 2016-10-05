@@ -17,7 +17,7 @@ module.exports = function (grunt) {
 				keepRunner: true,
 				outfile: runner,
 				specs: specs,
-				vendor: project.vendors,
+				vendor: project.getHelpers(),
 				styles: project.getCssStyles()
 			}
 		};

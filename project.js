@@ -101,7 +101,7 @@ project.getAllSrc = function () {
 project.getHelpers = function () {
 	"use strict";
 
-	return [project.library + project.lib0001.name].concat(project.settings.src.helper);
+	return project.vendors.concat(project.settings.src.helper);
 };
 
 //exports project data
