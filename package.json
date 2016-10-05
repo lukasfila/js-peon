@@ -2,8 +2,7 @@
 	"name": "peon",
 	"version": "0.1.0",
 	"main": "index.js",
-	"dependencies": {},
-	"devDependencies": {
+	"dependencies": {
 		"grunt-contrib-copy": "^1.0.0",
 		"grunt-maven-deploy": "^0.2.1",
 		"eslint": "^2.0.0-rc.1",
@@ -20,6 +19,8 @@
 		"grunt-istanbul-combine": "^0.1.0",
 		"grunt-template-jasmine-istanbul": "^0.3.3",
 		"grunt-timer": "^0.6.0"
+	},
+	"devDependencies": {
 	},
 	"author": "Lukáš Fíla",
 	"licence": "MIT"
