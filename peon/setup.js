@@ -19,6 +19,8 @@
 	}
 	//check package json
 	checkPackageJson();
+	//check runtime files
+	checkRuntimeFiles();
 
 	/**
 	 * Check package json
@@ -53,6 +55,18 @@
 
 		exec('npm update');
 		console.log("Running npm update.");
+	}
+
+	/**
+	 * Check runtime files
+	 */
+	function checkRuntimeFiles() {
+		if (!fs.existsSync(baseDir + "/peon.js")) {
+			fs.createReadStream(setupPath + '/../peon.js').pipe(fs.createWriteStream(baseDir + '/peon.js'));
+		}
+		if (!fs.existsSync(baseDir + "/peon.bat")) {
+			fs.createReadStream(setupPath + '/../peon.bat').pipe(fs.createWriteStream(baseDir + '/peon.bat'));
+		}
 	}
 
 	/**
