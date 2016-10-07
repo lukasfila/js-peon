@@ -1,5 +1,5 @@
 /* globals require, process, console, __dirname, process*/
-var peon = require("./node_modules/peon"),
+var peon = require("./node_modules/peon/peon/index"),
 	path = __dirname,
 	port;
 
