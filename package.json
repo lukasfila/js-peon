@@ -2,6 +2,7 @@
 	"name": "peon",
 	"version": "0.1.0",
 	"main": "index.js",
+	"install": "node node_modules/peon/setup",
 	"dependencies": {
 		"grunt-contrib-copy": "^1.0.0",
 		"grunt-maven-deploy": "^0.2.1",
