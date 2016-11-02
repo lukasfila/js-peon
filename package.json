@@ -19,7 +19,8 @@
 		"grunt-debug-code-remover": "^0.1.0",
 		"grunt-istanbul-combine": "^0.1.0",
 		"grunt-template-jasmine-istanbul": "^0.3.3",
-		"grunt-timer": "^0.6.0"
+		"grunt-timer": "^0.6.0",
+		"flow-remove-types": "*"
 	},
 	"devDependencies": {
 	},

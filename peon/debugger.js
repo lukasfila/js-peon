@@ -24,9 +24,10 @@ var Debugger = {};
 
 	/**
 	 * Run debug
+	 * @param {boolean} tests
 	 */
-	Debugger.runDebug = function () {
-		setDebugWatchers();
+	Debugger.runDebug = function (tests) {
+		setDebugWatchers(tests);
 	};
 
 	/**
@@ -72,10 +73,12 @@ var Debugger = {};
 
 	/**
 	 * Run build
+	 * @param {boolean=} uglify
+	 * @param {boolean=} tests
 	 * @param {string=} type
 	 * @param {string=} filename
 	 */
-	Debugger.runBuild = function (type, filename) {
+	Debugger.runBuild = function (uglify, tests, type, filename) {
 		var productionFile = false;
 
 		//build in progress
@@ -96,19 +99,35 @@ var Debugger = {};
 		//delete and run build
 		fs.unlink(buildFile, function () {
 			writeMessage("Running build.");
-			//noinspection JSUnresolvedFunction
-			grunt.option("force", true);
-			//try build
 			try {
+				grunt.option("force", true);
 				grunt.tasks(["debug"], {
 					force: true
 				}, function () {
-					afterBuild(type, filename);
+					const exec = require('child_process').execSync;
+
+					exec(baseDir + '/node_modules/.bin/flow-remove-types ' + project.resource + project.settings.flow + " > " + project.resource + project.settings.name);
+
+					if (uglify) {
+						grunt.tasks(["min"], {
+							force: true
+						}, function () {
+							afterBuild(uglify, tests, type, filename);
+						});
+					} else if (tests) {
+						grunt.tasks(["tests"], {
+							force: true
+						}, function () {
+							afterBuild(uglify, tests, type, filename);
+						});
+					} else {
+						afterBuild(uglify, tests, type, filename);
+					}
 				});
 
 			} catch (e) {
 				writeMessage("Build failed, running again.");
-				Debugger.runBuild(type, filename);
+				Debugger.runBuild(uglify, tests, type, filename);
 			}
 		});
 		//building
@@ -117,9 +136,10 @@ var Debugger = {};
 
 	/**
 	 * Set debug watchers
+	 * @param {boolean} tests
 	 * @param {number=} counter
 	 */
-	function setDebugWatchers(counter) {
+	function setDebugWatchers(tests, counter) {
 		var settings,
 			dirs,
 			p,
@@ -133,7 +153,7 @@ var Debugger = {};
 		//build in progress
 		if (Debugger.build()) {
 			setTimeout(function () {
-				setDebugWatchers(counter + 1);
+				setDebugWatchers(tests, counter + 1);
 			}, 100);
 			return;
 		}
@@ -147,7 +167,7 @@ var Debugger = {};
 		for (i = 0; i < dirs.length; i++) {
 			for (p = 0; p < directories.length; p++) {
 				if (dirs[i].substring(0, directories[p].length) === directories[p]) {
-					fs.watch(dirs[i], settings, Debugger.runBuild);
+					fs.watch(dirs[i], settings, Debugger.runBuild.bind(null, false, tests));
 				}
 			}
 		}
@@ -157,16 +177,18 @@ var Debugger = {};
 
 	/**
 	 * After build
-	 * @param {string} type
-	 * @param {string} filename
+	 * @param {boolean=} uglify
+	 * @param {boolean=} tests
+	 * @param {string=} type
+	 * @param {string=} filename
 	 */
-	function afterBuild(type, filename) {
+	function afterBuild(uglify, tests, type, filename) {
 		fs.exists(buildFile, function (exists) {
 			//mark as build
 			build = false;
 			//error, try build again
 			if (!exists) {
-				Debugger.runBuild(type, filename);
+				Debugger.runBuild(uglify, tests, type, filename);
 				return;
 			}
 			//build done

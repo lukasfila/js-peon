@@ -1,10 +1,11 @@
 /* globals require, process, console, __dirname, process*/
 /**
- * Start
+ * Start debug server
  * @param {string} projectPath
  * @param {number} port
+ * @param {boolean} tests
  */
-exports.start = function (projectPath, port) {
+exports.start = function (projectPath, port, tests) {
 	var express = require("express"),
 		Debugger = require("./debugger.js"),
 		path = require("path"),
@@ -12,8 +13,8 @@ exports.start = function (projectPath, port) {
 		app = express();
 
 	//run debug
-	Debugger.runBuild();
-	Debugger.runDebug();
+	Debugger.runBuild(false, tests || false);
+	Debugger.runDebug(tests || false);
 
 	/**
 	 * Create response
@@ -35,6 +36,7 @@ exports.start = function (projectPath, port) {
 	//wait for build files
 	app.get("/bin/*.js", function (req, res) {
 		"use strict";
+
 		Debugger.sendResponseAfterBuild(req, res, 0);
 	});
 	//root
@@ -50,4 +52,14 @@ exports.start = function (projectPath, port) {
 	port = port || 3002;
 	app.listen(port);
 	console.log("Debug server listening on " + port);
+};
+
+/**
+ * Build
+ */
+exports.build = function () {
+	var Debugger = require("./debugger.js");
+
+	//run debug
+	Debugger.runBuild(true, true);
 };

@@ -14,7 +14,7 @@ describe("test app", function () {
 		//do something
 		demoProject.mainFunction();
 		//check
-		expect(document.querySelector("#content").innerHTML).toBe("Hello world");
+		expect(document.querySelector("#content").innerHTML).toBe("Hello world<br>String: value_expanded<br>Number: 5");
 		document.body.removeChild(div);
 	});
 });

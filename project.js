@@ -19,10 +19,12 @@ project.tests = "tests/";
 project.coverage = "coverage/";
 //coverage data location
 project.example = "example/";
+//source root
+project.sources = "sources";
 //style
 project.style = "styles/";
 //all watched dirs
-project.directories = ["sources", "styles"];
+project.directories = [project.sources, "styles"];
 //jquery
 project.lib0001 = {
 	name: "lib.js"
@@ -37,6 +39,8 @@ project.settings = {
 	//name
 	name: "demo.js",
 	min: "demo.min.js",
+	flow: "demo.flow.js",
+	flow_min: "demo.flow.min.js",
 	//less
 	less: [project.style + "*.less"],
 	//css
@@ -44,13 +48,13 @@ project.settings = {
 	//src
 	src: {
 		helper: [
-			"sources/init.js"
+			project.sources + "/init.js"
 		],
 		base: [
-			"sources/demo.js"
+			project.sources + "/demo.js"
 		],
 		files: [
-			"sources/**/*.js"
+			project.sources + "/**/*.js"
 
 		]
 	},
@@ -92,6 +96,15 @@ project.getAllSrc = function () {
 	"use strict";
 
 	return [].concat(project.settings.getFiles());
+};
+/**
+ * Get all bin files
+ * @returns {Array.<string>}
+ */
+project.getAllBinFiles = function () {
+	"use strict";
+
+	return [].concat(project.resource + project.settings.name);
 };
 
 /**

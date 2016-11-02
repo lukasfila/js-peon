@@ -1,1 +1,1 @@
-node index
+node index %1

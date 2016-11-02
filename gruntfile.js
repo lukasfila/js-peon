@@ -1,7 +1,6 @@
 module.exports = function (grunt) {
 
-	var project = require("./project"),
-		sources = project.settings.getFiles();
+	var project = require("./project");
 
 
 	/**
@@ -12,7 +11,7 @@ module.exports = function (grunt) {
 	 */
 	function specSettings(runner, specs) {
 		return {
-			src: project.getAllSrc(),
+			src: project.getAllBinFiles(),
 			options: {
 				keepRunner: true,
 				outfile: runner,
@@ -38,8 +37,8 @@ module.exports = function (grunt) {
 				stripBanners: true
 			},
 			build: {
-				src: sources,
-				dest: project.resource + project.settings.name
+				src: project.getAllSrc(),
+				dest: project.resource + project.settings.flow
 			}
 		},
 		less: {
@@ -67,7 +66,12 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("grunt-maven-deploy");
 	grunt.loadNpmTasks("grunt-contrib-less");
 
+	//tasks used by peon
 	grunt.registerTask("debug", ["concat", "less"]);
+	grunt.registerTask("min", ["uglify"]);
+	grunt.registerTask("tests", ["jasmine"]);
+
+	//user tasks
 	grunt.registerTask("default", ["concat", "uglify", "less", "jasmine"]);
 	grunt.registerTask("snapshot", ["concat", "uglify", "less", "jasmine", "maven_deploy:snapshot"]);
 	grunt.registerTask("release", ["concat", "uglify", "less", "jasmine", "maven_deploy:release"]);
