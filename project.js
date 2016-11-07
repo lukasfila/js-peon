@@ -39,8 +39,6 @@ project.settings = {
 	//name
 	name: "demo.js",
 	min: "demo.min.js",
-	flow: "demo.flow.js",
-	flow_min: "demo.flow.min.js",
 	//less
 	less: [project.style + "*.less"],
 	//css

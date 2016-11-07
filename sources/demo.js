@@ -1,14 +1,13 @@
 (function () {
 	"use strict";
 
-	//@flow
 	/**
 	 * Main function
 	 */
 	demoProject.mainFunction = function () {
 		var element = document.querySelector("#content"),
-			value: string = "value",
-			valueInt: number = 1;
+			value = "value",
+			valueInt = 1;
 
 		if (element) {
 			element.innerHTML = "Hello " + lib0001.doSomething("w", "o", "r", "l", "d");
@@ -20,15 +19,19 @@
 
 	/**
 	 * Do string magic
+	 * @param {string} value
+	 * @returns {string}
 	 */
-	function doStringMagic(value: string): string {
+	function doStringMagic(value) {
 		return value + "_expanded";
 	}
 
 	/**
 	 * Do number magic
+	 * @param {number} value
+	 * @returns {number}
 	 */
-	function doNumberMagic(value: number): number {
+	function doNumberMagic(value) {
 		return value * 5;
 	}
 }());

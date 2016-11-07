@@ -38,7 +38,7 @@ module.exports = function (grunt) {
 			},
 			build: {
 				src: project.getAllSrc(),
-				dest: project.resource + project.settings.flow
+				dest: project.resource + project.settings.name
 			}
 		},
 		less: {

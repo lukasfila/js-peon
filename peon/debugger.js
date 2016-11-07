@@ -104,10 +104,6 @@ var Debugger = {};
 				grunt.tasks(["debug"], {
 					force: true
 				}, function () {
-					const exec = require('child_process').execSync;
-
-					exec(baseDir + '/node_modules/.bin/flow-remove-types ' + project.resource + project.settings.flow + " > " + project.resource + project.settings.name);
-
 					if (uglify) {
 						grunt.tasks(["min"], {
 							force: true
