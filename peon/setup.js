@@ -53,7 +53,7 @@
 	function updateProjectFiles() {
 		var exec = require('child_process').exec;
 
-		exec('npm update');
+		exec('npm update --force');
 		console.log("Running npm update.");
 	}
 
