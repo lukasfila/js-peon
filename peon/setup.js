@@ -27,14 +27,14 @@
 	 */
 	function checkPackageJson() {
 		var setupPackage = /**@type {PackageJson}*/require(setupPath + "/../package.json"),
-			dependencies = setupPackage.dependencies,
+			dependencies = setupPackage.devDependencies,
 			modified = false,
 			dependency;
 
 		for (dependency in dependencies) {
 			if (dependencies.hasOwnProperty(dependency)) {
-				if (packageJson.dependencies[dependency] !== dependencies[dependency]) {
-					packageJson.dependencies[dependency] = dependencies[dependency];
+				if (packageJson.devDependencies[dependency] !== dependencies[dependency]) {
+					packageJson.devDependencies[dependency] = dependencies[dependency];
 					modified = true;
 				}
 			}
@@ -88,5 +88,6 @@
 	/**
 	 * @typedef {object} PackageJson
 	 * @property {Array.<string>} dependencies
+	 * @property {Array.<string>} devDependencies
 	 */
 }());
